@@ -379,8 +379,7 @@ public boolean equals(IntArrayBag b){
 		return false;
 		
 	} else {
-		for(int i = 0;i < b.manyItems;i++)
-		{
+		for(int i = 0;i < b.manyItems;i++) {
 			int count = 0;
 			int count2 = 0;
 			
@@ -398,9 +397,12 @@ public boolean equals(IntArrayBag b){
 		if(count != count2){
 			
 			return false;
+		}//end both bags empty check
+		
 		}
-	}//end both bags empty check
 
+	
+	}
 	return true;
 }
 
