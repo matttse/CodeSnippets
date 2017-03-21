@@ -8,7 +8,7 @@ package stack;
 import java.util.Stack;
 import java.util.Scanner;
 
-public class isBalancedDemonstration
+public class IsBalancedDemonstration
 {
 
 	public static void main(String[ ] args)
@@ -69,7 +69,7 @@ public class isBalancedDemonstration
    for (i = 0; !failed && (i < expression.length( )); i++)
    {
       switch (expression.charAt(i))
-      {
+      {	//if any of these cases are open
          case LEFT_NORMAL:
          case LEFT_CURLY:
          case LEFT_SQUARE: 
