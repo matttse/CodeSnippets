@@ -8,7 +8,7 @@ package stack;
 import java.util.Stack;
 import java.util.Scanner;
 
-public class IsBalancedDemonstration
+public class isBalancedDemonstration
 {
 
 	public static void main(String[ ] args)
