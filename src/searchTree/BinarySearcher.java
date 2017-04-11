@@ -1,3 +1,5 @@
+package searchTree;
+
 // File: BinarySearcher.java
 // A Java application to illustrate the binary search of an array.
 // Additional javadoc documentation is available at
