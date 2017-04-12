@@ -51,8 +51,50 @@ private IntBTNode root;
 *   Indicates insufficient memory a new IntBTNode.
 **/
 public void add(int element)
-{      
-   // Implemented by student.
+{
+	//if tree is empty
+	if (root == null) {
+		//create new node
+		root = new IntBTNode(element, null, null);
+	} else {//else cont searching new ele
+		//add new node to leaf
+		IntBTNode newNode = new IntBTNode(element, null, null);
+		if (element <= root.getData()) {//recursively search left subtree
+			
+			if (root.getLeft() == null) {
+				root.setLeft(newNode);
+			} else {
+				IntBTNode cursor = new IntBTNode(root.getData(), root.getLeft(), root.getRight());
+				while (cursor.getLeft() != null) {
+					cursor = cursor.getLeft();
+				}
+				cursor.setLeft(newNode);
+				
+			}			
+		} else if (element >= root.getData()) {//recursively search right subtree
+			if (root.getRight() == null) {
+				root.setRight(newNode);
+			} else {
+				IntBTNode cursor = new IntBTNode(root.getData(), root.getLeft(), root.getRight());
+				while (cursor.getRight() != null) {
+					cursor = cursor.getRight();
+				}
+				cursor.setRight(newNode);
+				
+			}	
+			
+		} else if (element == root.getData()){//increment the count and recursively search left subtree
+			IntBTNode cursor = new IntBTNode(root.getLeft().getData(), root.getLeft(), root.getRight());
+			while (cursor.getLeft() != null) {
+				cursor = cursor.getLeft();
+			}
+			cursor.setLeft(newNode);
+		}
+	}
+
+
+	
+	
 }
 
 
@@ -153,6 +195,22 @@ public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
    // Student will replace this return statement with their own code:
    return null;
 }
+
+ public static void main(String[ ] args){
+		  
+		// for testing
+		IntTreeBag itb = new IntTreeBag();	   
+
+		itb.add(17);
+		itb.add(10);
+		itb.add(25);
+		itb.add(25);
+		itb.add(17);
+		itb.add(6);
+		itb.add(20);
+	   
+		itb.root.inorderPrint(); // should print 6 10 17 17 20 25 25
+	}
    
 }
         
