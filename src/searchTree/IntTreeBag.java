@@ -68,10 +68,14 @@ public void add(int element)
 				while (cursor.getLeft() != null) {
 					cursor = cursor.getLeft();
 				}
-				cursor.setLeft(newNode);
+				if (cursor.getData() >= element) {
+					cursor.setLeft(newNode);
+				} else {
+					cursor.setRight(newNode);
+				}
 				
 			}			
-		} else if (element >= root.getData()) {//recursively search right subtree
+		} else if (element > root.getData()) {//recursively search right subtree
 			if (root.getRight() == null) {
 				root.setRight(newNode);
 			} else {
@@ -79,17 +83,27 @@ public void add(int element)
 				while (cursor.getRight() != null) {
 					cursor = cursor.getRight();
 				}
-				cursor.setRight(newNode);
+				if (cursor.getData() > element) {
+					cursor.setLeft(newNode);
+				} else {
+					cursor.setRight(newNode);
+				}
 				
 			}	
 			
-		} else if (element == root.getData()){//increment the count and recursively search left subtree
-			IntBTNode cursor = new IntBTNode(root.getLeft().getData(), root.getLeft(), root.getRight());
-			while (cursor.getLeft() != null) {
-				cursor = cursor.getLeft();
-			}
-			cursor.setLeft(newNode);
 		}
+//		else if (element == root.getData()){//increment the count and recursively search left subtree
+//			if (root.getLeft() == null) {
+//				root.setLeft(newNode);
+//			} else {
+//				IntBTNode cursor = new IntBTNode(root.getLeft().getData(), root.getLeft(), root.getRight());
+//				while (cursor.getLeft() != null) {
+//					cursor = cursor.getLeft();
+//				}
+//				cursor.setLeft(newNode);
+//			}
+
+//		}
 	}
 
 
