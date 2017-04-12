@@ -52,6 +52,7 @@ private IntBTNode root;
 **/
 public void add(int element)
 {
+	boolean done = false;
 	//if tree is empty
 	if (root == null) {
 		//create new node
@@ -59,51 +60,55 @@ public void add(int element)
 	} else {//else cont searching new ele
 		//add new node to leaf
 		IntBTNode newNode = new IntBTNode(element, null, null);
-		if (element <= root.getData()) {//recursively search left subtree
+		IntBTNode cursor = new IntBTNode(root.getData(), root.getLeft(), root.getRight());
+		while (done == false) {
+			if (element <= root.getData()) {//recursively search left subtree				
+				if (root.getLeft() == null) {//check left child null
+					root.setLeft(newNode);//create new node
+					done = true;
+				} else {//cont search left	
+					
+					if (element <= cursor.getData()) {//set smaller element to the left of this cursor
+						if (cursor.getLeft() == null) {
+							cursor.setLeft(newNode);//create new node
+							done = true;//exit
+						} else {//iterate cursor
+							cursor = cursor.getLeft();
+						}	
+					} else {//scan right side of this cursor
+						if (cursor.getRight() == null) {
+							cursor.setRight(newNode);//create new node
+							done = true;//exit
+						} else {//iterate cursor
+							cursor = cursor.getRight();
+						}					
+					}//end left search					
+				}
 			
-			if (root.getLeft() == null) {
-				root.setLeft(newNode);
-			} else {
-				IntBTNode cursor = new IntBTNode(root.getData(), root.getLeft(), root.getRight());
-				while (cursor.getLeft() != null) {
-					cursor = cursor.getLeft();
-				}
-				if (cursor.getData() >= element) {
-					cursor.setLeft(newNode);
-				} else {
-					cursor.setRight(newNode);
-				}
+			} else {//recursively search right subtree
+				if (root.getRight() == null) {//check left child null
+					root.setRight(newNode);//create new node
+					done = true;
+				} else {//cont search left
+					if (element <= cursor.getData()) {//set smaller element to the left of this cursor
+						if (cursor.getLeft() == null) {
+							cursor.setLeft(newNode);//create new node
+							done = true;//exit
+						} else {//iterate cursor
+							cursor = cursor.getLeft();
+						}	
+					} else {//scan right side of this cursor
+						if (cursor.getRight() == null) {
+							cursor.setRight(newNode);//create new node
+							done = true;//exit
+						} else {//iterate cursor
+							cursor = cursor.getRight();
+						}						
+					}					
+				}//end left search	
 				
-			}			
-		} else if (element > root.getData()) {//recursively search right subtree
-			if (root.getRight() == null) {
-				root.setRight(newNode);
-			} else {
-				IntBTNode cursor = new IntBTNode(root.getData(), root.getLeft(), root.getRight());
-				while (cursor.getRight() != null) {
-					cursor = cursor.getRight();
-				}
-				if (cursor.getData() > element) {
-					cursor.setLeft(newNode);
-				} else {
-					cursor.setRight(newNode);
-				}
-				
-			}	
-			
+			}
 		}
-//		else if (element == root.getData()){//increment the count and recursively search left subtree
-//			if (root.getLeft() == null) {
-//				root.setLeft(newNode);
-//			} else {
-//				IntBTNode cursor = new IntBTNode(root.getLeft().getData(), root.getLeft(), root.getRight());
-//				while (cursor.getLeft() != null) {
-//					cursor = cursor.getLeft();
-//				}
-//				cursor.setLeft(newNode);
-//			}
-
-//		}
 	}
 
 
@@ -222,6 +227,7 @@ public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
 		itb.add(17);
 		itb.add(6);
 		itb.add(20);
+		itb.add(16);
 	   
 		itb.root.inorderPrint(); // should print 6 10 17 17 20 25 25
 	}
