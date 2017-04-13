@@ -176,10 +176,169 @@ public int countOccurrences(int target)
 *   <CODE>target</CODE> has been removed and the method returns true. 
 *   Otherwise the bag remains unchanged and the method returns false. 
 **/
-private boolean remove(int target)
-{
-   // Student will replace this return statement with their own code:
-   return false;
+private boolean remove(int target) {
+	IntBTNode cursor = new IntBTNode(root.getData(), root.getLeft(), root.getRight());
+	IntBTNode parentOfCursor = null;
+	boolean done = false;
+	if (root == null) {//skip all searching and return false
+		return done;
+	} else {
+		while (done == false) {
+
+			if (target <= root.getData()) {//search left tree
+				//cont searching downwards
+				parentOfCursor = cursor;
+				cursor = cursor.getLeft();
+				////
+				if (target <= cursor.getData()) {
+
+					//case 2: cursor at root, and no left child
+					if (parentOfCursor.getData() == root.getData() && cursor.getLeft() == null) {
+						root = root.getRight();
+						done = true;
+					//case 3: cursor has no left child
+					} else if (cursor.getLeft() == null) {
+						if (cursor == parentOfCursor.getLeft()) {
+							//cursor on left side of parent
+							//change parents left link
+							parentOfCursor.setLeft(cursor.getRight());
+						} else {
+							//cursor on right side of parent
+							//change parents right link
+							parentOfCursor.setRight(cursor.getRight());
+						}
+						done = true;
+					//case 4: cursor has left child
+					} else if (cursor.getLeft() != null) {
+						if (cursor.getRight() != null) {//check right child
+							cursor.setData(cursor.getRight().getRightmostData());
+							cursor.setRight(cursor.getRight().removeRightmost());
+						} else {
+							cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
+							cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree							
+						}
+
+						done = true;
+					} else {//case 1: cursor is null
+						return false;
+					}
+				} else {
+					//cont searching downwards
+					parentOfCursor = cursor;
+					cursor = cursor.getRight();
+					//case 2: cursor at root, and no left child
+					if (parentOfCursor.getData() == root.getData() && cursor.getLeft() == null) {
+						root = root.getRight();
+						done = true;
+					//case 3: cursor has no left child
+					} else if (cursor.getLeft() == null) {
+						if (cursor == parentOfCursor.getLeft()) {
+							//cursor on left side of parent
+							//change parents left link
+							parentOfCursor.setLeft(cursor.getRight());
+						} else {
+							//cursor on right side of parent
+							//change parents right link
+							parentOfCursor.setRight(cursor.getRight());
+						}
+						done = true;
+					//case 4: cursor has left child
+					} else if (cursor.getLeft() != null) {
+						if (cursor.getRight() != null) {//check right child
+							cursor.setData(cursor.getRight().getRightmostData());
+							cursor.setRight(cursor.getRight().removeRightmost());
+						} else {
+							cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
+							cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree							
+						}
+
+						done = true;
+					} else {//case 1: cursor is null
+						return false;
+					}
+				}
+
+				////
+			} else {//search right tree
+				//cont searching downwards
+				parentOfCursor = cursor;
+				cursor = cursor.getRight();
+				////				
+				if (target <= cursor.getData()) {
+
+					//case 2: cursor at root, and no left child
+					if (parentOfCursor == null && cursor.getLeft() == null) {
+						root = root.getRight();
+						done = true;
+					//case 3: cursor has no left child
+					} else if (cursor.getLeft() == null) {
+						if (cursor == parentOfCursor.getLeft()) {
+							//cursor on left side of parent
+							//change parents left link
+							parentOfCursor.setLeft(cursor.getRight());
+						} else {
+							//cursor on right side of parent
+							//change parents right link
+							parentOfCursor.setRight(cursor.getRight());
+						}
+						done = true;
+					//case 4: cursor has left child
+					} else if (cursor.getLeft() != null) {
+						if (cursor.getRight() != null) {//check right child
+							cursor.setData(cursor.getRight().getRightmostData());
+							cursor.setRight(cursor.getRight().removeRightmost());
+						} else {
+							cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
+							cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree							
+						}
+
+						done = true;
+					} else {//case 1: cursor is null
+						return false;
+					}
+				} else {
+					//cont searching downwards
+					parentOfCursor = cursor;
+					cursor = cursor.getRight();
+					//case 2: cursor at root, and no left child
+					if (parentOfCursor == root && cursor.getLeft() == null) {
+						root = root.getRight();
+						done = true;
+					//case 3: cursor has no left child
+					} else if (cursor.getLeft() == null) {
+						if (cursor == parentOfCursor.getLeft()) {
+							//cursor on left side of parent
+							//change parents left link
+							parentOfCursor.setLeft(cursor.getRight());
+						} else {
+							//cursor on right side of parent
+							//change parents right link
+							parentOfCursor.setRight(cursor.getRight());
+						}
+						done = true;
+					//case 4: cursor has left child
+					} else if (cursor.getLeft() != null) {
+						if (cursor.getRight() != null) {//check right child
+							cursor.setData(cursor.getRight().getRightmostData());
+							cursor.setRight(cursor.getRight().removeRightmost());
+						} else {
+							cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
+							cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree							
+						}
+
+						done = true;
+					} else {//case 1: cursor is null
+						return false;
+					}
+				}
+				////	
+			}
+
+		}
+	}
+
+   //true finds element and removes copy of target
+   return done;
 }
 
    
@@ -228,6 +387,9 @@ public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
 		itb.add(6);
 		itb.add(20);
 		itb.add(16);
+		itb.remove(17);
+		itb.remove(25);
+		itb.remove(17);
 	   
 		itb.root.inorderPrint(); // should print 6 10 17 17 20 25 25
 	}
