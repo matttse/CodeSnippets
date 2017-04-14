@@ -181,164 +181,137 @@ private boolean remove(int target) {
 	IntBTNode parentOfCursor = null;
 	boolean done = false;
 	if (root == null) {//skip all searching and return false
-		return done;
+		return false;
 	} else {
-		while (done == false) {
+		if (target <= root.getData()) {//search left tree
+			//cont searching downwards
+			parentOfCursor = cursor;
+			cursor = cursor.getLeft();
+			////
+			if (target <= cursor.getData()) {
 
-			if (target <= root.getData()) {//search left tree
-				//cont searching downwards
-				parentOfCursor = cursor;
-				cursor = cursor.getLeft();
-				////
-				if (target <= cursor.getData()) {
-
-					//case 2: cursor at root, and no left child
-					if (parentOfCursor.getData() == root.getData() && cursor.getLeft() == null) {
-						root = root.getRight();
-						done = true;
-					//case 3: cursor has no left child
-					} else if (cursor.getLeft() == null) {
-						if (cursor == parentOfCursor.getLeft()) {
-							//cursor on left side of parent
-							//change parents left link
-							parentOfCursor.setLeft(cursor.getRight());
-						} else {
-							//cursor on right side of parent
-							//change parents right link
-							parentOfCursor.setRight(cursor.getRight());
-						}
-						done = true;
-					//case 4: cursor has left child
-					} else if (cursor.getLeft() != null) {
-						if (cursor.getRight() != null) {//check right child
-							cursor.setData(cursor.getRight().getRightmostData());
-							cursor.setRight(cursor.getRight().removeRightmost());
-						} else {
-							cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
-							cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree							
-						}
-
-						done = true;
-					} else {//case 1: cursor is null
-						return false;
+				//case 2: cursor at root, and no left child
+				if (cursor.getData() == root.getData() && cursor.getLeft() == null) {
+					root = root.getRight();
+					return true;
+				//case 3: cursor has no left child
+				} else if (cursor.getLeft() == null) {
+					if (cursor == parentOfCursor.getLeft()) {
+						//cursor on left side of parent
+						//change parents left link
+						parentOfCursor.setLeft(cursor.getRight());
+					} else {
+						//cursor on right side of parent
+						//change parents right link
+						parentOfCursor.setRight(cursor.getRight());
 					}
-				} else {
-					//cont searching downwards
-					parentOfCursor = cursor;
-					cursor = cursor.getRight();
-					//case 2: cursor at root, and no left child
-					if (parentOfCursor.getData() == root.getData() && cursor.getLeft() == null) {
-						root = root.getRight();
-						done = true;
-					//case 3: cursor has no left child
-					} else if (cursor.getLeft() == null) {
-						if (cursor == parentOfCursor.getLeft()) {
-							//cursor on left side of parent
-							//change parents left link
-							parentOfCursor.setLeft(cursor.getRight());
-						} else {
-							//cursor on right side of parent
-							//change parents right link
-							parentOfCursor.setRight(cursor.getRight());
-						}
-						done = true;
-					//case 4: cursor has left child
-					} else if (cursor.getLeft() != null) {
-						if (cursor.getRight() != null) {//check right child
-							cursor.setData(cursor.getRight().getRightmostData());
-							cursor.setRight(cursor.getRight().removeRightmost());
-						} else {
-							cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
-							cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree							
-						}
+					return true;
+				//case 4: cursor has left child
+				} else if (cursor.getLeft() != null) {
+					cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
+					cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree	
 
-						done = true;
-					} else {//case 1: cursor is null
-						return false;
-					}
+					return true;
+				} else {//case 1: cursor is null
+					return false;
 				}
-
-				////
-			} else {//search right tree
+			} else {
 				//cont searching downwards
 				parentOfCursor = cursor;
 				cursor = cursor.getRight();
-				////				
-				if (target <= cursor.getData()) {
-
-					//case 2: cursor at root, and no left child
-					if (parentOfCursor == null && cursor.getLeft() == null) {
-						root = root.getRight();
-						done = true;
-					//case 3: cursor has no left child
-					} else if (cursor.getLeft() == null) {
-						if (cursor == parentOfCursor.getLeft()) {
-							//cursor on left side of parent
-							//change parents left link
-							parentOfCursor.setLeft(cursor.getRight());
-						} else {
-							//cursor on right side of parent
-							//change parents right link
-							parentOfCursor.setRight(cursor.getRight());
-						}
-						done = true;
-					//case 4: cursor has left child
-					} else if (cursor.getLeft() != null) {
-						if (cursor.getRight() != null) {//check right child
-							cursor.setData(cursor.getRight().getRightmostData());
-							cursor.setRight(cursor.getRight().removeRightmost());
-						} else {
-							cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
-							cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree							
-						}
-
-						done = true;
-					} else {//case 1: cursor is null
-						return false;
+				//case 2: cursor at root, and no left child
+				if (cursor.getData() == root.getData() && cursor.getLeft() == null) {
+					root = root.getRight();
+					return true;
+				//case 3: cursor has no left child
+				} else if (cursor.getLeft() == null) {
+					if (cursor == parentOfCursor.getLeft()) {
+						//cursor on left side of parent
+						//change parents left link
+						parentOfCursor.setLeft(cursor.getRight());
+					} else {
+						//cursor on right side of parent
+						//change parents right link
+						parentOfCursor.setRight(cursor.getRight());
 					}
-				} else {
-					//cont searching downwards
-					parentOfCursor = cursor;
-					cursor = cursor.getRight();
-					//case 2: cursor at root, and no left child
-					if (parentOfCursor == root && cursor.getLeft() == null) {
-						root = root.getRight();
-						done = true;
-					//case 3: cursor has no left child
-					} else if (cursor.getLeft() == null) {
-						if (cursor == parentOfCursor.getLeft()) {
-							//cursor on left side of parent
-							//change parents left link
-							parentOfCursor.setLeft(cursor.getRight());
-						} else {
-							//cursor on right side of parent
-							//change parents right link
-							parentOfCursor.setRight(cursor.getRight());
-						}
-						done = true;
-					//case 4: cursor has left child
-					} else if (cursor.getLeft() != null) {
-						if (cursor.getRight() != null) {//check right child
-							cursor.setData(cursor.getRight().getRightmostData());
-							cursor.setRight(cursor.getRight().removeRightmost());
-						} else {
-							cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
-							cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree							
-						}
-
-						done = true;
-					} else {//case 1: cursor is null
-						return false;
-					}
+					return true;
+				//case 4: cursor has left child
+				} else if (cursor.getLeft() != null) {
+					cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
+					cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree	
+					return true;
+				} else {//case 1: cursor is null
+					return false;
 				}
-				////	
 			}
 
+			////
+		} else {//search right tree
+			//cont searching downwards
+			parentOfCursor = cursor;
+			cursor = cursor.getRight();
+			////				
+			if (target <= cursor.getData()) {
+
+				//case 2: cursor at root, and no left child
+				if (cursor.getData() == root.getData() && cursor.getLeft() == null) {
+					root = root.getRight();
+					return true;
+				//case 3: cursor has no left child
+				} else if (cursor.getLeft() == null) {
+					if (cursor == parentOfCursor.getLeft()) {
+						//cursor on left side of parent
+						//change parents left link
+						parentOfCursor.setLeft(cursor.getRight());
+					} else {
+						//cursor on right side of parent
+						//change parents right link
+						parentOfCursor.setRight(cursor.getRight());
+					}
+					return true;
+				//case 4: cursor has left child
+				} else if (cursor.getLeft() != null) {
+					cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
+					cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree	
+					return true;
+				} else {//case 1: cursor is null
+					return false;
+				}
+			} else {
+				//cont searching downwards
+				parentOfCursor = cursor;
+				cursor = cursor.getRight();
+				//case 2: cursor at root, and no left child
+				if (cursor.getData() == root.getData() && cursor.getLeft() == null) {
+					root = root.getRight();
+					return true;
+				//case 3: cursor has no left child
+				} else if (cursor.getLeft() == null) {
+					if (cursor == parentOfCursor.getLeft()) {
+						//cursor on left side of parent
+						//change parents left link
+						parentOfCursor.setLeft(cursor.getRight());
+					} else {
+						//cursor on right side of parent
+						//change parents right link
+						parentOfCursor.setRight(cursor.getRight());
+					}
+					return true;
+				//case 4: cursor has left child
+				} else if (cursor.getLeft() != null) {
+					cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
+					cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree	
+					return true;
+				} else {//case 1: cursor is null
+					return false;
+				}
+			}
+			////	
 		}
+		
 	}
 
    //true finds element and removes copy of target
-   return done;
 }
 
    
