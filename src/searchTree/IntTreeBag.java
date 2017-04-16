@@ -132,9 +132,30 @@ public void add(int element)
 **/
 public void addAll(IntTreeBag addend)
 {
-   // Implemented by student.
+	IntBTNode addroot;
+	
+	if (root == addend.root) {
+		//addend is the same as the bag that activated this method
+		addroot = IntBTNode.treeCopy(addend.root);
+		addTree(addroot);
+	} else {
+		addTree(addend.root);
+	}
 }
 
+//precondition: addroot is a reference to the root of a binary search tree
+//that is separate from the binary search tree of the bag that activated
+//this method
+//postcondition: all the elements from the addroot's binary search tree
+//have been added to the binary search tree of the bag that actvated this
+//method
+private void addTree(IntBTNode addroot) {
+	if(addroot != null) {
+		add(addroot.getData());
+		//make recusrive call to add all of addroots left subtree
+		//make recusrive call to add all of addroots right subtree
+	}
+}
 
 /**
 * Generate a copy of this bag.
@@ -187,15 +208,15 @@ private boolean remove(int target) {
 			//cont searching downwards
 			parentOfCursor = cursor;
 			cursor = cursor.getLeft();
+			//case 2: cursor at root, and no left child
+			if (parentOfCursor.getData() == root.getData() && cursor.getLeft() == null) {
+				root = root.getRight();
+				return true;
+			}
 			////
 			if (target <= cursor.getData()) {
-
-				//case 2: cursor at root, and no left child
-				if (cursor.getData() == root.getData() && cursor.getLeft() == null) {
-					root = root.getRight();
-					return true;
 				//case 3: cursor has no left child
-				} else if (cursor.getLeft() == null) {
+				if (cursor.getLeft() == null) {
 					if (cursor == parentOfCursor.getLeft()) {
 						//cursor on left side of parent
 						//change parents left link
@@ -250,15 +271,15 @@ private boolean remove(int target) {
 			//cont searching downwards
 			parentOfCursor = cursor;
 			cursor = cursor.getRight();
+			//case 2: cursor at root, and no left child
+			if (cursor.getData() == root.getData() && cursor.getLeft() == null) {
+				root = root.getRight();
+				return true;
+			}
 			////				
 			if (target <= cursor.getData()) {
-
-				//case 2: cursor at root, and no left child
-				if (cursor.getData() == root.getData() && cursor.getLeft() == null) {
-					root = root.getRight();
-					return true;
 				//case 3: cursor has no left child
-				} else if (cursor.getLeft() == null) {
+				if (cursor.getLeft() == null) {
 					if (cursor == parentOfCursor.getLeft()) {
 						//cursor on left side of parent
 						//change parents left link
@@ -307,9 +328,9 @@ private boolean remove(int target) {
 				}
 			}
 			////	
-		}
-		
-	}
+		}//check left tree or right tree 		
+	}//check root null
+			
 
    //true finds element and removes copy of target
 }
