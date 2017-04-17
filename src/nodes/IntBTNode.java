@@ -279,7 +279,10 @@ public IntBTNode removeRightmost( )
    if (right == null)
       return left;
    else
-      return right.removeRightmost( );
+   {
+	      right = right.removeRightmost( );
+	      return this;
+	   }
 }
     
 /**

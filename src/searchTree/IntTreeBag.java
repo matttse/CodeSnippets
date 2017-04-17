@@ -152,17 +152,12 @@ public void addAll(IntTreeBag addend)
 private void addTree(IntBTNode addroot) {
 	if(addroot != null) {
 		add(addroot.getData());
-		
-		while (addroot.getLeft() != null) {
-			add(addroot.getLeft().getData());
-		}
-		while (addroot.getRight() != null) {
-			add(addroot.getRight().getData());
-		}
-		
-		
 		//make recusrive call to add all of addroots left subtree
+		if (addroot.getLeft() != null)
+			add(addroot.getLeft().getData());
 		//make recusrive call to add all of addroots right subtree
+		if (addroot.getRight() != null)
+			add(addroot.getRight().getData());
 	}
 }
 
@@ -244,7 +239,7 @@ private boolean remove(int target) {
 			} else {//search right tree
 				if (target <= cursor.getData()) {//cont searching downwards
 					parentOfCursor = cursor;
-					cursor = cursor.getRight();
+					cursor = cursor.getLeft();
 				} else {//cont searching downwards				
 					parentOfCursor = cursor;
 					cursor = cursor.getRight();
@@ -273,9 +268,10 @@ private boolean remove(int target) {
 				}
 				return true;
 			
-			} else if (cursor != null && cursor.getLeft() != null) {//case 4: cursor nonnull and cursor has left child
+			} else if (cursor != null && cursor.getLeft() != null) {//case 4: cursor non-null and cursor has left child
 				cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
-				cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree	
+				cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree					
+	
 				return true;
 			}
 		}
@@ -332,16 +328,16 @@ public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
 		itb.add(6);
 		itb.add(20);
 		itb.add(16);
-		itb.remove(17);
+//		itb.remove(25);
 //		itb.remove(25);
 //		itb.remove(6);
 //		itb.remove(17);
-		itb.root.inorderPrint(); // should print 6 10 17 17 20 25 25
+//		itb.root.inorderPrint(); // should print 6 10 17 17 20 25 25
 //		System.out.println(itb.countOccurrences(6));
-//		IntTreeBag itbTwo = new IntTreeBag();
-//		
-//		itbTwo.addAll(itb);	   
-//		itbTwo.root.inorderPrint(); // should print 6 10 17 17 20 25 25
+		IntTreeBag itbTwo = new IntTreeBag();
+		
+		itbTwo.addAll(itb);	   
+		itbTwo.root.inorderPrint(); // should print 6 10 17 17 20 25 25
 	}
    
 }
