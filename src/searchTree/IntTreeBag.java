@@ -107,13 +107,9 @@ public void add(int element)
 					}					
 				}//end left search	
 				
-			}
-		}
-	}
-
-
-	
-	
+			}//left or right tree check
+		}//done while loop
+	}//empty tree check
 }
 
 
@@ -132,8 +128,12 @@ public void add(int element)
 **/
 public void addAll(IntTreeBag addend)
 {
-	IntBTNode addroot;
-	
+    IntBTNode addroot;
+
+    if (addend == null)
+    {
+       throw new IllegalArgumentException("Null addend");
+    }
 	if (root == addend.root) {
 		//addend is the same as the bag that activated this method
 		addroot = IntBTNode.treeCopy(addend.root);
@@ -152,6 +152,15 @@ public void addAll(IntTreeBag addend)
 private void addTree(IntBTNode addroot) {
 	if(addroot != null) {
 		add(addroot.getData());
+		
+		while (addroot.getLeft() != null) {
+			add(addroot.getLeft().getData());
+		}
+		while (addroot.getRight() != null) {
+			add(addroot.getRight().getData());
+		}
+		
+		
 		//make recusrive call to add all of addroots left subtree
 		//make recusrive call to add all of addroots right subtree
 	}
@@ -181,10 +190,30 @@ public Object clone( )
 * @return
 *   the number of times that <CODE>target</CODE> occurs in this bag
 **/
-public int countOccurrences(int target)
-{
-   // Student will replace this return statement with their own code:
-   return 0;
+public int countOccurrences(int target) {
+	int count = 0;
+
+	boolean done = false;
+	//if tree is empty
+	if (root == null) {
+		//create new node
+		return count;
+	} else {//else continue searching new target
+		IntBTNode cursor = new IntBTNode(root.getData(), root.getLeft(), root.getRight());
+		while (done == false) {							
+			if (cursor == null) {//case 1: cursor is null
+				done = true;
+			} else if (target < cursor.getData()) {//case 2: target smaller than data at cursor node
+				cursor = cursor.getLeft();
+			} else if (target > cursor.getData()) {//case 3: target larger than data at cursor node
+				cursor = cursor.getRight();
+			} else if (target == cursor.getData()) {//case 4: equal increment count
+				count++;
+				cursor = cursor.getLeft();
+			}
+		}//done while loop
+	}//empty tree check
+   return count;
 }
 
           
@@ -372,7 +401,7 @@ public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
 		  
 		// for testing
 		IntTreeBag itb = new IntTreeBag();	   
-
+		
 		itb.add(17);
 		itb.add(10);
 		itb.add(25);
@@ -381,11 +410,15 @@ public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
 		itb.add(6);
 		itb.add(20);
 		itb.add(16);
-		itb.remove(17);
-		itb.remove(25);
-		itb.remove(17);
-	   
+//		itb.remove(17);
+//		itb.remove(25);
+//		itb.remove(17);
 		itb.root.inorderPrint(); // should print 6 10 17 17 20 25 25
+//		System.out.println(itb.countOccurrences(6));
+//		IntTreeBag itbTwo = new IntTreeBag();
+//		
+//		itbTwo.addAll(itb);	   
+//		itbTwo.root.inorderPrint(); // should print 6 10 17 17 20 25 25
 	}
    
 }
