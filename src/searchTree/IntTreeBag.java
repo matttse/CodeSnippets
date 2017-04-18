@@ -223,7 +223,7 @@ public int countOccurrences(int target) {
 *   Otherwise the bag remains unchanged and the method returns false. 
 **/
 private boolean remove(int target) {
-	IntBTNode cursor = new IntBTNode(root.getData(), root.getLeft(), root.getRight());
+	IntBTNode cursor = root;
 	IntBTNode parentOfCursor = null;
 	//case 1: cursor is null
 	if (root == null || cursor == null) {//skip all searching and return false
@@ -238,16 +238,10 @@ private boolean remove(int target) {
 					parentOfCursor = cursor;
 					cursor = cursor.getRight();
 				}
-			} else {//search right tree
-				if (target <= cursor.getData()) {//cont searching downwards
-					parentOfCursor = cursor;
-					cursor = cursor.getLeft();
-				} else {//cont searching downwards				
-					parentOfCursor = cursor;
-					cursor = cursor.getRight();
-				}
-			}//check left tree or right tree 			
-		} 
+			}
+		}//check left tree or right tree 			
+	
+	
 		if (target == cursor.getData()) {
 			
 			if (cursor == root && cursor.getLeft() == null) {//case 2: cursor at root, and no left child
@@ -269,7 +263,6 @@ private boolean remove(int target) {
 			} else if (cursor != null && cursor.getLeft() != null) {//case 4: cursor non-null and cursor has left child
 				cursor.setData(cursor.getLeft().getRightmostData());//sets data in cursor to rightmost ele in left tree
 				cursor.setLeft(cursor.getLeft().removeRightmost());//remove "extra"/original copy from tree					
-	
 				return true;
 			}
 		}
@@ -331,15 +324,17 @@ public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
 //		itb.remove(25);
 //		itb.remove(25);
 //		itb.remove(6);
-//		itb.remove(17);
+		itb.remove(17);
+		itb.root.preorderPrint();
+		
 //		itb.root.inorderPrint(); // should print 6 10 17 17 20 25 25
 //		System.out.println(itb.countOccurrences(6));
-		IntTreeBag itbTwo = new IntTreeBag();
+		//IntTreeBag itbTwo = new IntTreeBag();
 		
-		itbTwo.addAll(itb);	   
+		//itbTwo.addAll(itb);	   
 //		itbTwo.root.inorderPrint(); // should print 6 10 17 17 20 25 25
 		
-		System.out.println(union(itb, itbTwo));
+		//System.out.println(union(itb, itbTwo));
 		
 		
 		
