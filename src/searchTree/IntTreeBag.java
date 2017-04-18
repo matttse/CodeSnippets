@@ -151,13 +151,14 @@ public void addAll(IntTreeBag addend)
 //method
 private void addTree(IntBTNode addroot) {
 	if(addroot != null) {
-		add(addroot.getData());
+		add(addroot.getData());		
 		//make recusrive call to add all of addroots left subtree
 		if (addroot.getLeft() != null)
-			add(addroot.getLeft().getData());
+			addTree(addroot.getLeft());//pass back IntBTNode
 		//make recusrive call to add all of addroots right subtree
 		if (addroot.getRight() != null)
-			add(addroot.getRight().getData());
+			addTree(addroot.getRight());//pass back IntBTNode
+	
 	}
 }
 
@@ -224,7 +225,8 @@ public int countOccurrences(int target) {
 private boolean remove(int target) {
 	IntBTNode cursor = new IntBTNode(root.getData(), root.getLeft(), root.getRight());
 	IntBTNode parentOfCursor = null;
-	if (root == null) {//skip all searching and return false
+	//case 1: cursor is null
+	if (root == null || cursor == null) {//skip all searching and return false
 		return false;
 	} else {
 		while (target != cursor.getData()) {
@@ -246,11 +248,7 @@ private boolean remove(int target) {
 				}
 			}//check left tree or right tree 			
 		} 
-
-
-		if (cursor == null) {//case 1: cursor is null
-			return false;
-		} else if (target == cursor.getData()) {
+		if (target == cursor.getData()) {
 			
 			if (cursor == root && cursor.getLeft() == null) {//case 2: cursor at root, and no left child
 				root = root.getRight();
@@ -311,7 +309,9 @@ public int size( )
 **/   
 public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
 {
-   // Student will replace this return statement with their own code:
+   IntTreeBag newBag = new IntTreeBag();
+   newBag.addTree(b1.root);
+   newBag.addTree(b2.root);
    return null;
 }
 
@@ -337,7 +337,12 @@ public static IntTreeBag union(IntTreeBag b1, IntTreeBag b2)
 		IntTreeBag itbTwo = new IntTreeBag();
 		
 		itbTwo.addAll(itb);	   
-		itbTwo.root.inorderPrint(); // should print 6 10 17 17 20 25 25
+//		itbTwo.root.inorderPrint(); // should print 6 10 17 17 20 25 25
+		
+		System.out.println(union(itb, itbTwo));
+		
+		
+		
 	}
    
 }
