@@ -8,7 +8,7 @@ package objecttofunctionalconversion;
 
 /**
  *
- * @author Ender_Laptop
+ * @author tsemd
  */
 public class ObjectToFunctionalConversion {
 
@@ -27,7 +27,10 @@ public class ObjectToFunctionalConversion {
             System.out.println("Hello World");
 
           }
-          
+
+        };
+        Runnable myLambaVar = () -> {
+            System.out.println("hello world");
         };
     }
     
