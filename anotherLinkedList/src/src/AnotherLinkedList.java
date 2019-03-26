@@ -67,19 +67,20 @@ public class AnotherLinkedList {
             Integer next = iterator.next();
             System.out.println("sorted ascending "+next);
         }
-        
+        // shuffle
         Collections.shuffle(connectorBag);
         System.out.println("---Shuffle Complete---");
         for (int i = 0; i < connectorBag.size(); i++) {
             System.out.println("shuffled "+connectorBag.get(i));
         }
+        // sort then reverse
         Collections.sort(connectorBag);
         Collections.reverse(connectorBag);        
         System.out.println("---Reverse Sort Complete---");
         for (int i = 0; i < connectorBag.size(); i++) {
             System.out.println("reversed "+connectorBag.get(i));
         }
-        Collections.reverse(connectorBag);
+        Collections.reverse(connectorBag);//re reverse
         System.out.println("Min = "+connectorBag.peekFirst());// find min
         System.out.println("Max = "+connectorBag.peekLast());// find max
         
