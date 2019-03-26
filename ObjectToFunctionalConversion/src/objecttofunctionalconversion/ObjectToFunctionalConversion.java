@@ -16,22 +16,27 @@ public class ObjectToFunctionalConversion {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // using an anonymous class
+        
 
-        Runnable r = new Runnable() { 
-
-          @Override
-
-          public void run() {
-
-            System.out.println("Hello World");
-
-          }
-
-        };
-        Runnable myLambaVar = () -> {
+        newLambda myLambdaVar = () -> {
             System.out.println("hello world");
         };
+        
+        myLambdaVar.run();
     }
-    
+    interface newLambda {
+        void run();
+    }
+    // using an anonymous class
+    Runnable r = new Runnable() { 
+
+    @Override
+
+    public void run() {
+
+        System.out.println("Hello World");
+
+    }
+
+    };
 }
