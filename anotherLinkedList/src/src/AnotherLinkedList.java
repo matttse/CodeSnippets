@@ -2,10 +2,15 @@ package src;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import node.IntArrayBag;
 import java.util.LinkedList;
+import java.util.Set;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,7 +20,7 @@ import java.util.LinkedList;
 
 /**
  *
- * @author Ender_Laptop
+ * @author tsemd
  */
 public class AnotherLinkedList {
 
@@ -230,78 +235,50 @@ public class AnotherLinkedList {
             secondBag.add(secondList.get(i));
                         
         }
+        // print statements
+        System.out.println("---First Bag---");
         for (int i = 0; i < firstBag.size(); i++) {
             System.out.println(firstBag.get(i));// print statements
             
         }
+        System.out.println("---Second Bag---");
         for (int i = 0; i < secondBag.size(); i++) {
             System.out.println(secondBag.get(i));// print statements
             
         }
         // add values to 3rd bag
+        connectorBag.addAll(firstBag);
         connectorBag.addAll(secondBag);
-        connectorBag.addAll(secondBag);
+        System.out.println("--Third Bag---");
         for (int i = 0; i < connectorBag.size(); i++) {
-            System.out.println(connectorBag.get(i));// print statements
-            
+            System.out.println("unsorted union Bag "+connectorBag.get(i));// print statements
         }
-        // static method to union linkedlists
-//        connectorBag = IntArrayBag.union(firstBag, secondBag);
-        // clean up
-//        firstBag.trimToSize();
-//        secondBag.trimToSize();
-//        connectorBag.trimToSize();
-        // print statements
-//        System.out.println("FirstBag");
-//        firstBag.printBag();
-//        System.out.println("SecondBag");
-//        secondBag.printBag();
-//        System.out.println("LastBag");
-//        connectorBag.printBag();
-    
-        // sort asc
+        Collections.sort(connectorBag);//ascending sort
+        System.out.println("---Ascended Sort Complete---");
+        for (Iterator<Integer> iterator = connectorBag.iterator(); iterator.hasNext();) {
+            Integer next = iterator.next();
+            System.out.println("sorted ascending "+next);
+        }
         
-//        System.out.print(connectorBag.getCapacity());
-        int[] tempBag = new int[connectorBag.size()];
-//        for (int i = 0; i < tempBag.length ; i++) {
-//           tempBag[i] = connectorBag.get(i);
-//           connectorBag.remove(i);
-//        }
-//        quickSort(tempBag);
-//        for (int i = 0; i < tempBag.length ; i++) {
-//           connectorBag.add(tempBag[i]);
-//           
-//        }
-        // shuffle
-        // sort desc
-        // find min
-        // find max
+        Collections.shuffle(connectorBag);
+        System.out.println("---Shuffle Complete---");
+        for (int i = 0; i < connectorBag.size(); i++) {
+            System.out.println("shuffled "+connectorBag.get(i));
+        }
+        Collections.sort(connectorBag);
+        Collections.reverse(connectorBag);        
+        System.out.println("---Reverse Sort Complete---");
+        for (int i = 0; i < connectorBag.size(); i++) {
+            System.out.println("reversed "+connectorBag.get(i));
+        }
+        Collections.reverse(connectorBag);
+        System.out.println("Min = "+connectorBag.peekFirst());// find min
+        System.out.println("Max = "+connectorBag.peekLast());// find max
         
     }
     
 }
 
-//  IntArrayBag bag1 = new IntArrayBag();
-//  for (int i=0; i<6; i++)
-//         bag1.add(i);
-//  bag1.addMany(1,3,5,4,3,5,3,1,6);
-//  
-//  System.out.println("Bag1 has: ");
-//  // print elements in bag 1
-//  bag1.printBag();
-//  // create bag2 which is a clone of bag1
-//  IntArrayBag bag2 = new IntArrayBag();
-//  bag2 = bag1.clone();
-//  // first, print elements of bag2
-//  bag2.printBag();  
-//
-//  // then, compare bag1 and bag2 using the equals method
-//  System.out.println("\nbag1 equals bag2: " + bag1.equals(bag2));
-  
-  	   
-  // modify bag2 using add or remove method and test the equality again
-  // you may want to repeat this multiple times with different contents of bag2
-  // first, print bag2
   
   
   
